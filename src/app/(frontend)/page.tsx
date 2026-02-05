@@ -1,59 +1,55 @@
-import { headers as getHeaders } from 'next/headers.js'
-import Image from 'next/image'
-import { getPayload } from 'payload'
-import React from 'react'
-import { fileURLToPath } from 'url'
+import ShiBui from '@/assets/shibui.webp'
+import Pho from '@/assets/pho-thai-son-less.webp'
+import Tranquil from '@/assets/tranquil-books-coffee.webp'
+import BunCha from '@/assets/bun-cha-41.webp'
+import { HorizontalGallery } from '@/components/HorizontalGallery'
 
-import config from '@/payload.config'
-import './styles.css'
-
-export default async function HomePage() {
-  const headers = await getHeaders()
-  const payloadConfig = await config
-  const payload = await getPayload({ config: payloadConfig })
-  const { user } = await payload.auth({ headers })
-
-  const fileURL = `vscode://file/${fileURLToPath(import.meta.url)}`
-
+export default function Page() {
   return (
-    <div className="home">
-      <div className="content">
-        <picture>
-          <source srcSet="https://raw.githubusercontent.com/payloadcms/payload/main/packages/ui/src/assets/payload-favicon.svg" />
-          <Image
-            alt="Payload Logo"
-            height={65}
-            src="https://raw.githubusercontent.com/payloadcms/payload/main/packages/ui/src/assets/payload-favicon.svg"
-            width={65}
+    <section className="py-lg">
+      <div className="space-y-xl">
+        <div className="max-w-prose">
+          <h1 className="text-hero tracking-tight font-bold">
+            coffee,
+            <br />
+            food,
+            <br />
+            travel.
+          </h1>
+        </div>
+
+        <div className="space-y-sm">
+          <h2 className="text-hero tracking-tight font-light">Recent</h2>
+          <HorizontalGallery
+            images={[
+              {
+                image: ShiBui,
+                alt: 'Shibui Concept',
+                location: 'Saigon, Vietnam',
+                type: 'coffee',
+              },
+              {
+                image: Pho,
+                alt: 'Pho',
+                location: 'Saigon, Vietnam',
+                type: 'food',
+              },
+              {
+                image: Tranquil,
+                alt: 'Tranquil',
+                location: 'Hanoi, Vietnam',
+                type: 'coffee',
+              },
+              {
+                image: BunCha,
+                alt: 'Bun Cha at 41',
+                location: 'Hanoi, Vietnam',
+                type: 'food',
+              },
+            ]}
           />
-        </picture>
-        {!user && <h1>Welcome to your new project.</h1>}
-        {user && <h1>Welcome back, {user.email}</h1>}
-        <div className="links">
-          <a
-            className="admin"
-            href={payloadConfig.routes.admin}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Go to admin panel
-          </a>
-          <a
-            className="docs"
-            href="https://payloadcms.com/docs"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Documentation
-          </a>
         </div>
       </div>
-      <div className="footer">
-        <p>Update this page by editing</p>
-        <a className="codeLink" href={fileURL}>
-          <code>app/(frontend)/page.tsx</code>
-        </a>
-      </div>
-    </div>
+    </section>
   )
 }
