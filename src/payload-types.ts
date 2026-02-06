@@ -156,6 +156,21 @@ export interface Trip {
   city: string;
   country: string;
   type: 'coffee' | 'food';
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   /**
    * This determines whether the trip is displayed on the site or not
    */
@@ -295,6 +310,7 @@ export interface TripSelect<T extends boolean = true> {
   city?: T;
   country?: T;
   type?: T;
+  content?: T;
   published?: T;
   updatedAt?: T;
   createdAt?: T;

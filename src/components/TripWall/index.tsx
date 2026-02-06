@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { CoffeeIcon, FoodIcon } from '../Icons'
 import { TripFromCMS } from '@/types'
+import Link from 'next/link'
 
 type ActiveFilter = {
   country: string | null
@@ -64,8 +65,9 @@ export function TripWall({ trips }: Props) {
         </div>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-md md:gap-lg">
-        {visibleTrips.map(({ id, image, type, city }, index) => (
-          <article
+        {visibleTrips.map(({ id, slug, image, type, city }, index) => (
+          <Link
+            href={slug || ''}
             key={id}
             className="group space-y-sm gallery-image"
             style={{ animationDelay: `${index * 100}ms` }}
@@ -81,7 +83,7 @@ export function TripWall({ trips }: Props) {
                 {type === 'coffee' ? <CoffeeIcon /> : <FoodIcon />} {city}
               </span>
             </div>
-          </article>
+          </Link>
         ))}
       </div>
     </section>

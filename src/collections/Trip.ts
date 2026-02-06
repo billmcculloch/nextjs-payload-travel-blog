@@ -64,6 +64,10 @@ export const Trip: CollectionConfig = {
       ],
     },
     {
+      name: 'content',
+      type: 'richText',
+    },
+    {
       name: 'published',
       type: 'checkbox',
       defaultValue: true,

@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { CoffeeIcon, FoodIcon } from '../Icons'
 import { TripFromCMS } from '@/types'
+import Link from 'next/link'
 
 type Props = {
   trips: TripFromCMS[]
@@ -12,8 +13,9 @@ export function HorizontalGallery({ trips }: Props) {
       <div className="relative">
         <div className="overflow-x-auto overflow-y-visible overscroll-x-contain touch-pan-x no-scrollbar -mx-[calc((100vw-100%)/2)]">
           <div className="flex gap-md px-md md:px-lg lg:px-xl snap-x snap-mandatory">
-            {trips.map(({ id, image, city, type }) => (
-              <div
+            {trips.map(({ id, slug, image, city, type }) => (
+              <Link
+                href={slug || ''}
                 key={id}
                 className="flex-none w-fit rounded-hero overflow-hidden relative group carousel-image"
               >
@@ -36,7 +38,7 @@ export function HorizontalGallery({ trips }: Props) {
                 <span className="absolute left-sm bottom-sm inline-flex rounded-full bg-paper/90 backdrop-blur px-sm py-1 text-xs font-hand text-ink gap-2">
                   {type === 'coffee' ? <CoffeeIcon /> : <FoodIcon />} {city}
                 </span>
-              </div>
+              </Link>
             ))}
 
             <div className="flex-none w-md" />
