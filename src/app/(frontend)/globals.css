@@ -67,3 +67,32 @@ svg {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+@keyframes fadeInSoft {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.gallery-image {
+  animation: fadeInSoft 400ms ease-out both;
+}
+
+@keyframes fadeInLong {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+.carousel-image {
+  animation: fadeInLong 800ms ease-out both;
+  will-change: opacity transform;
+}

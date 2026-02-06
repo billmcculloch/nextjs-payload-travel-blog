@@ -1,46 +1,40 @@
-import Image, { StaticImageData } from 'next/image'
+import Image from 'next/image'
 import { CoffeeIcon, FoodIcon } from '../Icons'
-
-type Image = {
-  image: StaticImageData
-  alt: string
-  location: string
-  type: 'coffee' | 'food'
-}
+import { TripFromCMS } from '@/types'
 
 type Props = {
-  images: Image[]
+  trips: TripFromCMS[]
 }
 
-export function HorizontalGallery({ images }: Props) {
+export function HorizontalGallery({ trips }: Props) {
   return (
     <section>
       <div className="relative">
         <div className="overflow-x-auto overflow-y-visible overscroll-x-contain touch-pan-x no-scrollbar -mx-[calc((100vw-100%)/2)]">
           <div className="flex gap-md px-md md:px-lg lg:px-xl snap-x snap-mandatory">
-            {images.map(({ image, alt, location, type }) => (
+            {trips.map(({ id, image, city, type }) => (
               <div
-                key={image.src}
-                className="flex-none w-fit rounded-hero overflow-hidden relative"
+                key={id}
+                className="flex-none w-fit rounded-hero overflow-hidden relative group carousel-image"
               >
                 <Image
-                  src={image}
-                  alt={alt}
-                  className="object-cover lg:hidden"
+                  src={image.url || ''}
+                  alt={image.alt}
+                  className="object-cover transition-transform duration-700 group-hover:scale-[1.02] lg:hidden cursor-pointer"
                   priority
                   width={300}
                   height={375}
                 />
                 <Image
-                  src={image}
-                  alt={alt}
-                  className="object-cover hidden lg:block"
+                  src={image.url || ''}
+                  alt={image.alt}
+                  className="object-cover transition-transform duration-700 group-hover:scale-[1.02] hidden lg:block cursor-pointer"
                   priority
                   width={400}
                   height={500}
                 />
-                <span className="absolute top-2 left-2 flex items-center rounded-full bg-paper text-xs tracking-wide px-3 py-1 shadow font-extralight leading-none gap-2">
-                  {type === 'coffee' ? <CoffeeIcon /> : <FoodIcon />} {location}
+                <span className="absolute left-sm bottom-sm inline-flex rounded-full bg-paper/90 backdrop-blur px-sm py-1 text-xs font-hand text-ink gap-2">
+                  {type === 'coffee' ? <CoffeeIcon /> : <FoodIcon />} {city}
                 </span>
               </div>
             ))}
