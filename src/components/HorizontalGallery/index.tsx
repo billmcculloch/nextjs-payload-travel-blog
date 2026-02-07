@@ -20,7 +20,7 @@ export function HorizontalGallery({ trips }: Props) {
                 className="flex-none w-fit rounded-hero overflow-hidden relative group carousel-image"
               >
                 <Image
-                  src={`${process.env.NEXT_PUBLIC_URL}${image.url}` || ''}
+                  src={image.url || ''}
                   alt={image.alt}
                   className="object-cover transition-transform duration-700 group-hover:scale-[1.02] lg:hidden cursor-pointer"
                   priority
@@ -28,7 +28,7 @@ export function HorizontalGallery({ trips }: Props) {
                   height={375}
                 />
                 <Image
-                  src={`${process.env.NEXT_PUBLIC_URL}${image.url}` || ''}
+                  src={image.url || ''}
                   alt={image.alt}
                   className="object-cover transition-transform duration-700 group-hover:scale-[1.02] hidden lg:block cursor-pointer"
                   priority

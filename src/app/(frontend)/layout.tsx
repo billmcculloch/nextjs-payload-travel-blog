@@ -9,8 +9,8 @@ const inter = Inter({
 })
 
 export const metadata = {
-  description: 'A blank template using Payload in a Next.js app.',
-  title: 'Payload Blank Template',
+  description: 'Recent travels for coffee, food and more. ',
+  title: 'coffee, food, travel.',
 }
 
 export default async function RootLayout(props: { children: React.ReactNode }) {

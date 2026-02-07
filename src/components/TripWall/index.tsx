@@ -74,7 +74,7 @@ export function TripWall({ trips }: Props) {
           >
             <div className="relative aspect-4/5 overflow-hidden rounded-soft">
               <Image
-                src={`${process.env.NEXT_PUBLIC_URL}${image.url}` || ''}
+                src={image.url || ''}
                 alt={image.alt}
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-[1.02] cursor-pointer"
