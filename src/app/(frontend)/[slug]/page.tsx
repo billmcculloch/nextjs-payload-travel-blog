@@ -47,8 +47,6 @@ export default async function TripPage({ params }: Props) {
         </div>
 
         <article className="basis-2/3 py-sm lg:py-lg">
-          {' '}
-          {/* Bottom padding on article instead */}
           {trip.content ? <RichText data={trip.content} /> : null}
         </article>
       </div>
