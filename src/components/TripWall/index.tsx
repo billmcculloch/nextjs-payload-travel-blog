@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { CoffeeIcon, FoodIcon } from '../Icons'
 import { TripFromCMS } from '@/types'
 import Link from 'next/link'
+import { getMediaUrl } from '@/lib/get-media-url'
 
 type ActiveFilter = {
   country: string | null
@@ -74,7 +75,7 @@ export function TripWall({ trips }: Props) {
           >
             <div className="relative aspect-4/5 overflow-hidden rounded-soft">
               <Image
-                src={image.url || ''}
+                src={getMediaUrl(image.url)}
                 alt={image.alt}
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-[1.02] cursor-pointer"
