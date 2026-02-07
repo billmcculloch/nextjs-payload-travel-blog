@@ -24,7 +24,7 @@ const converters: JSXConvertersFunction<DefaultNodeTypes> = ({ defaultConverters
     ) {
       return (
         <Image
-          src={value.url!}
+          src={`${process.env.NEXT_PUBLIC_URL}${value.url}` || ''}
           alt={value.alt!}
           width={400}
           height={500}
