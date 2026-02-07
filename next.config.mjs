@@ -6,7 +6,8 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: '**.public.blob.vercel-storage.com',
+        hostname: 'nextjs-payload-travel-blog.vercel.app',
+        pathname: '/api/media/**',
       },
       {
         protocol: 'http',
