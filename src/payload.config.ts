@@ -33,7 +33,6 @@ export default buildConfig({
   sharp,
   plugins: [
     vercelBlobStorage({
-      enabled: process.env.NODE_ENV === 'production',
       collections: {
         media: true,
       },

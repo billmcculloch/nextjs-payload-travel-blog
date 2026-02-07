@@ -6,7 +6,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'nextjs-payload-travel-blog.vercel.app',
+        hostname: '**',
       },
       {
         protocol: 'http',
