@@ -18,6 +18,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
+  serverURL: process.env.PRODUCTION_URL || 'http://localhost:3000',
   collections: Object.values(collections),
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
