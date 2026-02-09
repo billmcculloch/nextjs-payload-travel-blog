@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { CoffeeIcon, FoodIcon } from '../Icons'
 import { TripFromCMS } from '@/types'
 import Link from 'next/link'
-import { getMediaUrl } from '@/lib/get-media-url'
+import { ImageMedia } from '@/lib/get-media'
 
 type Props = {
   trips: TripFromCMS[]
@@ -20,22 +20,23 @@ export function HorizontalGallery({ trips }: Props) {
                 key={id}
                 className="flex-none w-fit rounded-hero overflow-hidden relative group carousel-image"
               >
-                <Image
+                {image && <ImageMedia resource={image} />}
+                {/* <ImageMedia
                   src={`${process.env.NEXT_PUBLIC_URL}${image.url}`}
                   alt={image.alt}
                   className="object-cover transition-transform duration-700 group-hover:scale-[1.02] lg:hidden cursor-pointer"
                   priority
                   width={300}
                   height={375}
-                />
-                <Image
+                /> */}
+                {/* <Image
                   src={`${process.env.NEXT_PUBLIC_URL}${image.url}`}
                   alt={image.alt}
                   className="object-cover transition-transform duration-700 group-hover:scale-[1.02] hidden lg:block cursor-pointer"
                   priority
                   width={400}
                   height={500}
-                />
+                /> */}
                 <span className="absolute left-sm bottom-sm inline-flex rounded-full bg-paper/90 backdrop-blur px-sm py-1 text-xs font-hand text-ink gap-2">
                   {type === 'coffee' ? <CoffeeIcon /> : <FoodIcon />} {city}
                 </span>

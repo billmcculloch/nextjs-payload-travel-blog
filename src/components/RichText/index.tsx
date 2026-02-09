@@ -8,7 +8,6 @@ import { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 import { DefaultNodeTypes, SerializedUploadNode } from '@payloadcms/richtext-lexical'
 import { internalDocToHref } from './converters/link'
 import Image from 'next/image'
-import { getMediaUrl } from '@/lib/get-media-url'
 
 const converters: JSXConvertersFunction<DefaultNodeTypes> = ({ defaultConverters }) => ({
   ...defaultConverters,
@@ -24,13 +23,14 @@ const converters: JSXConvertersFunction<DefaultNodeTypes> = ({ defaultConverters
       value.mimeType?.startsWith('image/')
     ) {
       return (
-        <Image
-          src={`${process.env.NEXT_PUBLIC_URL}${value.url}`}
-          alt={value.alt!}
-          width={400}
-          height={500}
-          className="object-cover rounded-xl"
-        />
+        <></>
+        // <Image
+        //   src={`${process.env.NEXT_PUBLIC_URL}${value.url}`}
+        //   alt={value.alt!}
+        //   width={400}
+        //   height={500}
+        //   className="object-cover rounded-xl"
+        // />
       )
     }
   },

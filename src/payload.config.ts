@@ -7,6 +7,7 @@ import sharp from 'sharp'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 
 import * as collections from '@/collections'
+import { getServerSideURL } from './lib/get-url'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -30,6 +31,7 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URL || '',
     },
   }),
+  cors: [getServerSideURL()].filter(Boolean),
   sharp,
   plugins: [
     vercelBlobStorage({
