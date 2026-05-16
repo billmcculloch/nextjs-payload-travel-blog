@@ -1,3 +1,4 @@
+import { contentPermissions } from '@/lib/tenants'
 import type { CollectionConfig } from 'payload'
 
 export const Trip: CollectionConfig = {
@@ -6,8 +7,16 @@ export const Trip: CollectionConfig = {
     useAsTitle: 'title',
     defaultColumns: ['visitedAt', 'title', 'city', 'country', 'type', 'published'],
   },
-  access: {
-    read: () => true,
+  access: contentPermissions, 
+  hooks: {
+    beforeChange: [
+      ({ req, data, operation }) => {
+        if (operation === 'create') {
+          data.tenant = req.user?.tenant
+        }
+        return data
+      },
+    ],
   },
   fields: [
     {
@@ -67,6 +76,15 @@ export const Trip: CollectionConfig = {
     {
       name: 'content',
       type: 'richText',
+    },
+        {
+      name: 'tenant',
+      type: 'relationship',
+      relationTo: 'tenants',
+      required: true,
+      admin: {
+        condition: (_, { user }) => user?.role === 'super-admin',
+      },
     },
     {
       name: 'published',

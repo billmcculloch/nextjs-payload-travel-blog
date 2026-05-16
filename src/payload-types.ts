@@ -68,6 +68,7 @@ export interface Config {
   blocks: {};
   collections: {
     media: Media;
+    tenants: Tenant;
     trip: Trip;
     users: User;
     'payload-kv': PayloadKv;
@@ -78,6 +79,7 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     media: MediaSelect<false> | MediaSelect<true>;
+    tenants: TenantsSelect<false> | TenantsSelect<true>;
     trip: TripSelect<false> | TripSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -126,6 +128,7 @@ export interface UserAuthOperations {
 export interface Media {
   id: number;
   alt: string;
+  tenant?: (number | null) | Tenant;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -137,6 +140,22 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tenants".
+ */
+export interface Tenant {
+  id: number;
+  name: string;
+  /**
+   * Becomes the subdomain: slug.yourdomain.com
+   */
+  slug: string;
+  siteName?: string | null;
+  customDomain?: string | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -172,6 +191,7 @@ export interface Trip {
     };
     [k: string]: unknown;
   } | null;
+  tenant?: (number | null) | Tenant;
   /**
    * This determines whether the trip is displayed on the site or not
    */
@@ -185,6 +205,9 @@ export interface Trip {
  */
 export interface User {
   id: number;
+  name?: string | null;
+  role: 'super-admin' | 'tenant-admin' | 'tenant-member';
+  tenant?: (number | null) | Tenant;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -231,6 +254,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'tenants';
+        value: number | Tenant;
       } | null)
     | ({
         relationTo: 'trip';
@@ -288,6 +315,7 @@ export interface PayloadMigration {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
+  tenant?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -302,6 +330,18 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tenants_select".
+ */
+export interface TenantsSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  siteName?: T;
+  customDomain?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "trip_select".
  */
 export interface TripSelect<T extends boolean = true> {
@@ -313,6 +353,7 @@ export interface TripSelect<T extends boolean = true> {
   country?: T;
   type?: T;
   content?: T;
+  tenant?: T;
   published?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -322,6 +363,9 @@ export interface TripSelect<T extends boolean = true> {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  name?: T;
+  role?: T;
+  tenant?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;

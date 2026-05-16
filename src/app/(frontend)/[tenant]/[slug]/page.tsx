@@ -3,18 +3,33 @@ import { getTrip } from '@/lib/get-trip'
 import { format } from 'date-fns'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { getPayload } from 'payload'
 import React from 'react'
+import config from '@/payload.config'
 
 type Props = {
   params: Promise<{
+    tenant: string;
     slug: string
   }>
 }
 
 export default async function TripPage({ params }: Props) {
-  const { slug } = await params
+    const payload = await getPayload({ config })
+    
+  const { tenant: tenantParam, slug } = await params
 
-  const trip = await getTrip({ slug })
+const { docs: tenants } = await payload.find({
+    collection: 'tenants',
+    where: { slug: { equals: tenantParam } },
+    limit: 1,
+  })
+
+  if (!tenants.length) return notFound()
+	
+  const tenant = tenants[0]
+
+  const trip = await getTrip({ tenant, slug })
 
   if (!trip) {
     notFound()
