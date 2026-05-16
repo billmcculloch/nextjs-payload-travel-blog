@@ -1,4 +1,4 @@
-import type { Access, TypedUser } from 'payload'
+import type { Access, AccessArgs, TypedUser } from 'payload'
 
 export function getTenantId(user: any): string | undefined {
   if (!user?.tenant) return undefined
@@ -15,30 +15,34 @@ export const byTenant: Access = ({ req: { user } }) => {
   return { tenant: { equals: tenantId } }
 }
 
-type PayloadRequest ={
-  req: { user: TypedUser }
-}
-
 export const contentPermissions ={
-  read: ({ req: { user } }: PayloadRequest) => {
+  read: ({ req: { user, url } }: AccessArgs) => {
+    const isAdmin = url?.includes('/admin')
+
+    if (!isAdmin) {
+      return true
+    }
+
+    if (!user) return false
+    
+    const tenantId = getTenantId(user)
+    if (!tenantId) return false 
+    
+    return { tenant: { equals: tenantId } }
+  },
+  update: ({ req: { user } }: AccessArgs) => {
     if (!user) return false
     const tenantId = getTenantId(user)
     if (!tenantId) return false 
     return { tenant: { equals: tenantId } }
   },
-  update: ({ req: { user } }: PayloadRequest) => {
+  create: ({ req: { user } }: AccessArgs) => {
     if (!user) return false
     const tenantId = getTenantId(user)
     if (!tenantId) return false 
     return { tenant: { equals: tenantId } }
   },
-  create: ({ req: { user } }: PayloadRequest) => {
-    if (!user) return false
-    const tenantId = getTenantId(user)
-    if (!tenantId) return false 
-    return { tenant: { equals: tenantId } }
-  },
-  delete: ({ req: { user } }: PayloadRequest) => {
+  delete: ({ req: { user } }: AccessArgs) => {
     if (!user) return false
     const tenantId = getTenantId(user)
     if (!tenantId) return false 
@@ -47,8 +51,8 @@ export const contentPermissions ={
 }
 
 export const superAdminPermissions = {
-  read: ({ req: { user } }: PayloadRequest) => user?.role === 'super-admin',
-  update: ({ req: { user } }: PayloadRequest) => user?.role === 'super-admin',
-  create: ({ req: { user } }: PayloadRequest) => user?.role === 'super-admin',
-  delete: ({ req: { user } }: PayloadRequest) => user?.role === 'super-admin',
+  read: ({ req: { user } }: AccessArgs) => user?.role === 'super-admin',
+  update: ({ req: { user } }: AccessArgs) => user?.role === 'super-admin',
+  create: ({ req: { user } }: AccessArgs) => user?.role === 'super-admin',
+  delete: ({ req: { user } }: AccessArgs) => user?.role === 'super-admin',
 }
