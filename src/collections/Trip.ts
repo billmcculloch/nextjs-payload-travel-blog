@@ -21,6 +21,7 @@ export const Trip: CollectionConfig = {
     {
       name: 'slug',
       type: 'text',
+      required: true,
       unique: true,
       index: true,
       admin: {

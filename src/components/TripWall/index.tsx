@@ -77,7 +77,6 @@ export function TripWall({ trips }: Props) {
               <Image
                 src={getMediaUrl(image.url)}
                 alt={image.alt}
-                // unoptimized
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-[1.02] cursor-pointer"
               />
