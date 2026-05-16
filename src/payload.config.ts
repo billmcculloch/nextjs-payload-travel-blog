@@ -8,6 +8,7 @@ import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 
 import * as collections from '@/collections'
 
+
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 

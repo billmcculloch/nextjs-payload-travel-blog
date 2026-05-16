@@ -7,6 +7,11 @@ export function middleware(req: NextRequest) {
 
   let tenant = '';
 
+  // At the root, so redirect to the signup page
+  if(host.split('.').length === 1){
+    return NextResponse.rewrite(new URL('/signup', req.url))
+  }
+
   if (host.endsWith(ROOT_DOMAIN)) {
     tenant = host.replace(`.${ROOT_DOMAIN}`, '')
   } else if (host.includes('localhost')) {
@@ -17,7 +22,6 @@ export function middleware(req: NextRequest) {
 
   requestHeaders.set('x-tenant', tenant)
 
-
   return NextResponse.next({
     request: {
       headers: requestHeaders,
@@ -27,13 +31,6 @@ export function middleware(req: NextRequest) {
 
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - Common static root files (favicon.ico, robots.txt, sitemap.xml, manifest.json)
-     * - Any path containing a file extension (e.g., .png, .jpg, .svg)
-     */
     '/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|manifest.json|.*\\.[\\w]+$).*)',
   ],
 }

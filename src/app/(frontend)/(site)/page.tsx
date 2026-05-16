@@ -10,11 +10,7 @@ export default async function Page() {
 	  <div className="space-y-xl">
 		<div className="max-w-prose">
 		  <h1 className="text-hero tracking-tight font-bold">
-			coffee,
-			<br />
-			food,
-			<br />
-			travel.
+			''
 		  </h1>
 		</div>
 

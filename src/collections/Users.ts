@@ -37,7 +37,7 @@ access: {
     {
       name: 'role',
       type: 'select',
-      options: ['super-admin', 'tenant-admin', 'tenant-member'],
+      options: ['super-admin', 'tenant-admin'],
       defaultValue: 'tenant-admin',
       required: true,
     },

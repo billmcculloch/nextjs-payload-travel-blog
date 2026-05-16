@@ -68,6 +68,7 @@ export interface Config {
   blocks: {};
   collections: {
     media: Media;
+    'site-settings': SiteSetting;
     tenants: Tenant;
     trip: Trip;
     users: User;
@@ -79,6 +80,7 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     media: MediaSelect<false> | MediaSelect<true>;
+    'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
     tenants: TenantsSelect<false> | TenantsSelect<true>;
     trip: TripSelect<false> | TripSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
@@ -159,6 +161,28 @@ export interface Tenant {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings".
+ */
+export interface SiteSetting {
+  id: number;
+  tenant?: (number | null) | Tenant;
+  /**
+   * Displayed in the browser tab and site header
+   */
+  siteTitle: string;
+  /**
+   * Page background color — hex value
+   */
+  backgroundColor?: string | null;
+  /**
+   * Body text color — hex value
+   */
+  textColor?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "trip".
  */
 export interface Trip {
@@ -206,7 +230,7 @@ export interface Trip {
 export interface User {
   id: number;
   name?: string | null;
-  role: 'super-admin' | 'tenant-admin' | 'tenant-member';
+  role: 'super-admin' | 'tenant-admin';
   tenant?: (number | null) | Tenant;
   updatedAt: string;
   createdAt: string;
@@ -254,6 +278,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'site-settings';
+        value: number | SiteSetting;
       } | null)
     | ({
         relationTo: 'tenants';
@@ -327,6 +355,18 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings_select".
+ */
+export interface SiteSettingsSelect<T extends boolean = true> {
+  tenant?: T;
+  siteTitle?: T;
+  backgroundColor?: T;
+  textColor?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
