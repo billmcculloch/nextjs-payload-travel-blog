@@ -33,8 +33,9 @@ export default buildConfig({
   sharp,
   plugins: [
     vercelBlobStorage({
+      enabled: true,
       collections: {
-        media: true,
+        media: true, // your upload collection slug
       },
       token: process.env.BLOB_READ_WRITE_TOKEN,
     }),

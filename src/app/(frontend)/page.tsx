@@ -24,12 +24,12 @@ export default async function Page() {
           <div className="space-y-xl">
             <div className="space-y-sm">
               <h2 className="text-hero tracking-tight font-light">Recent</h2>
-              <HorizontalGallery trips={trips.slice(0, 4)} />
+              <HorizontalGallery trips={trips} />
             </div>
 
             <div className="space-y-sm">
               <h2 className="text-hero tracking-tight font-light">Older</h2>
-              <TripWall trips={trips.slice(4)} />
+              <TripWall trips={trips} />
             </div>
           </div>
         )}
