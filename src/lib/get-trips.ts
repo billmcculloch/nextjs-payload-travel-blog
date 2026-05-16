@@ -1,14 +1,15 @@
 import { TripFromCMS } from '@/types'
 import { getPayload } from 'payload'
 import config from '@/payload.config'
-import { Tenant } from '@/payload-types'
+import { getTenant } from './tenants'
 
-type Props ={
-  tenant: Tenant
-}
-
-export async function getTrips({tenant}: Props): Promise<TripFromCMS[]> {
+export async function getTrips(): Promise<TripFromCMS[]> {
   const payload = await getPayload({ config })
+
+  const tenant = await getTenant()
+  if(!tenant){
+    return []
+  }
 
   const { docs: trips } = await payload.find({
     collection: 'trip',
@@ -18,7 +19,9 @@ export async function getTrips({tenant}: Props): Promise<TripFromCMS[]> {
         published: {
          equals: true,
       },
-      tenant: { equals: tenant.id } 
+     'tenant.name': { 
+      equals: tenant,
+     },
     },
   })
 

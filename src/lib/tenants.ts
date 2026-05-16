@@ -1,18 +1,29 @@
-import type { Access, AccessArgs, TypedUser } from 'payload'
+import type { AccessArgs } from 'payload'
+
+import { headers } from 'next/headers'
+import { NextRequest } from 'next/server'
+
+export async function getTenant() {
+  const headersList = await headers()
+
+  const tenant = headersList.get('x-tenant')
+  
+  if (!tenant) {
+    return null
+  }
+
+  return tenant
+}
+
+export const getTenantFromReq = (req: NextRequest) => {
+  return req.headers.get('x-tenant')
+}
 
 export function getTenantId(user: any): string | undefined {
   if (!user?.tenant) return undefined
   if (typeof user.tenant === 'string') return user.tenant
   if (typeof user.tenant === 'object') return user.tenant.id
   return undefined
-}
-
-export const byTenant: Access = ({ req: { user } }) => {
-  if (!user) return false
-  if (user.role === 'super-admin') return true
-  const tenantId = getTenantId(user)
-  if (!tenantId) return false  // no tenant = no access
-  return { tenant: { equals: tenantId } }
 }
 
 export const contentPermissions ={

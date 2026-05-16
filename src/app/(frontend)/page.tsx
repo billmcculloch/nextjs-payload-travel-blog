@@ -1,29 +1,9 @@
-import { notFound } from 'next/navigation'
-import { getPayload } from 'payload'
-import config from '@payload-config'
-
 import { HorizontalGallery } from '@/components/HorizontalGallery'
 import { TripWall } from '@/components/TripWall'
 import { getTrips } from '@/lib/get-trips'
 
-type Props = { params: Promise<{ tenant: string }> }
-
-export default async function Page({ params }: Props) {
- const payload = await getPayload({ config })
-
-  const { tenant: tenantParam } = await params 
-
-  const { docs: tenants } = await payload.find({
-    collection: 'tenants',
-    where: { slug: { equals: tenantParam } },
-    limit: 1,
-  })
-
-  if (!tenants.length) return notFound()
-	
-  const tenant = tenants[0]
-
-  const trips  = await getTrips({tenant})
+export default async function Page() {
+  const trips  = await getTrips()
 
   return (
 	<section className="py-lg">
