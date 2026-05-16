@@ -5,22 +5,14 @@ export const Users: CollectionConfig = {
   slug: 'users',
  auth: true,
 admin: {
-    // This controls sidebar visibility
-    hidden: ({ user }) => {
-      // If no user is logged in, hide it
-      if (!user) return true;
-      
-      // If they are an admin, definitely show it
-      if (user.roles?.includes('admin')) return false;
-      
-      // For regular users, return false so the tab remains VISIBLE
-      return false; 
-    },
-  },
+    hidden: false
+}, 
 access: {
-    // Keep the read/update restrictions from the previous step!
     read: ({ req: { user } }) => {
       if (!user) return false;
+
+      if(user?.role === 'super-admin') return true
+
       return { id: { equals: user.id } };
     },
     update: ({ req: { user } }) => {

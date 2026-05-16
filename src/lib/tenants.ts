@@ -22,7 +22,6 @@ type PayloadRequest ={
 export const contentPermissions ={
   read: ({ req: { user } }: PayloadRequest) => {
     if (!user) return false
-    if (user.role === 'super-admin') return true
     const tenantId = getTenantId(user)
     if (!tenantId) return false 
     return { tenant: { equals: tenantId } }
