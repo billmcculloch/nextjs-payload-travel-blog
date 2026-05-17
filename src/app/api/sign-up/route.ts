@@ -8,10 +8,7 @@ export async function POST(req: Request) {
     const { name, email, password, siteName } = await req.json()
 
     if (!name || !email || !password || !siteName) {
-      return NextResponse.json(
-        { error: 'All fields are required' },
-        { status: 400 }
-      )
+      return NextResponse.json({ error: 'All fields are required' }, { status: 400 })
     }
 
     const payload = await getPayload({ config })
@@ -24,10 +21,7 @@ export async function POST(req: Request) {
       where: { slug: { equals: slug } },
     })
     if (existing.totalDocs > 0) {
-      return NextResponse.json(
-        { error: 'That site name is already taken' },
-        { status: 409 }
-      )
+      return NextResponse.json({ error: 'That site name is already taken' }, { status: 409 })
     }
 
     // Create tenant
@@ -51,10 +45,7 @@ export async function POST(req: Request) {
     })
 
     return NextResponse.json({ success: true, slug })
-  } catch (err: any) {
-    return NextResponse.json(
-      { error: err.message },
-      { status: 500 }
-    )
+  } catch {
+    return NextResponse.json({ error: 'Failed to create tenant' }, { status: 500 })
   }
 }

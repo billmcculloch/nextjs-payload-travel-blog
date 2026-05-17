@@ -5,10 +5,15 @@ const ROOT_DOMAIN = process.env.NEXT_PUBLIC_ROOT_DOMAIN!
 export function middleware(req: NextRequest) {
   const host = req.headers.get('host') || ''
 
-  let tenant = '';
+  const { pathname } = req.nextUrl
 
-  // At the root, so redirect to the signup page
-  if(host.split('.').length === 1){
+  const isInternalRoute =
+    pathname.startsWith('/api') || pathname.startsWith('/admin') || pathname.startsWith('/_next')
+
+  let tenant = ''
+
+  // At the root, so redirect to the signup page if its not an internal route (/admin or /api)
+  if (host.split('.').length === 1 && !isInternalRoute) {
     return NextResponse.rewrite(new URL('/signup', req.url))
   }
 

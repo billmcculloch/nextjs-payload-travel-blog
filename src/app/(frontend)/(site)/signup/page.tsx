@@ -13,13 +13,13 @@ export default function SignupPage() {
 
     const fd = new FormData(e.currentTarget)
     const body = {
-      name:     fd.get('name'),
-      email:    fd.get('email'),
+      name: fd.get('name'),
+      email: fd.get('email'),
       password: fd.get('password'),
       siteName: fd.get('siteName'),
     }
 
-    const res = await fetch('/api/signup', {
+    const res = await fetch('/api/sign-up', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
@@ -32,16 +32,15 @@ export default function SignupPage() {
       setError(data.error)
       return
     }
-
-    redirect(`/${data.slug}`)
+    redirect(`http://${data.slug}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`)
   }
 
   return (
     <form onSubmit={handleSubmit}>
-      <input name="name"     placeholder="Your name"   required />
-      <input name="email"    placeholder="Email"       required type="email" />
-      <input name="password" placeholder="Password"    required type="password" />
-      <input name="siteName" placeholder="Site name"   required />
+      <input name="name" placeholder="Your name" required />
+      <input name="email" placeholder="Email" required type="email" />
+      <input name="password" placeholder="Password" required type="password" />
+      <input name="siteName" placeholder="Site name" required />
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <button type="submit" disabled={loading}>
         {loading ? 'Creating…' : 'Create my blog'}
