@@ -6,10 +6,9 @@ export function middleware(req: NextRequest) {
   const host = req.headers.get('host') || ''
   const { pathname } = req.nextUrl
 
-  if ((host === 'www' || host === ROOT_DOMAIN) && pathname === '/') {
+  if ((host === ROOT_DOMAIN || host === `www.${ROOT_DOMAIN}`) && pathname === '/') {
     return NextResponse.rewrite(new URL('/signup', req.url))
   }
-
   let tenant = ''
 
   if (host.endsWith(ROOT_DOMAIN)) {
