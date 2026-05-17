@@ -9,9 +9,9 @@ const nextConfig = {
         protocol: 'http',
         hostname: 'localhost',
       },
-        {
+      {
         protocol: 'https',
-        hostname: 'nextjs-payload-travel-blog.vercel.app',
+        hostname: 'reccos.site',
       },
     ],
   },
