@@ -1,13 +1,24 @@
 'use client'
 import { redirect, useSearchParams } from 'next/navigation'
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 
 export default function SetUpPage() {
+  return (
+    <Suspense>
+      <SetUpInner />
+    </Suspense>
+  )
+}
+
+type Props = {
+  id: string | null
+}
+function SetUpInner() {
+  const searchParams = useSearchParams()
+  const id = searchParams.get('id')
+
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-
-  const searchParmas = useSearchParams()
-  const id = searchParmas.get('id')
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
