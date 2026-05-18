@@ -9,10 +9,6 @@ export default function SetUpPage() {
     </Suspense>
   )
 }
-
-type Props = {
-  id: string | null
-}
 function SetUpInner() {
   const searchParams = useSearchParams()
   const id = searchParams.get('id')
