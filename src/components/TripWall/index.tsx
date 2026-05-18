@@ -77,7 +77,6 @@ export function TripWall({ trips }: Props) {
                 src={image.url ?? ''}
                 alt={image.alt}
                 fill
-                unoptimized
                 className="object-cover transition-transform duration-700 group-hover:scale-[1.02] cursor-pointer"
               />
               <span className="absolute left-sm bottom-sm inline-flex rounded-full bg-paper/90 backdrop-blur px-sm py-1 text-xs font-hand text-ink gap-2">

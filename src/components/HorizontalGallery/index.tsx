@@ -26,7 +26,6 @@ export function HorizontalGallery({ trips }: Props) {
                   priority
                   width={300}
                   height={375}
-                  unoptimized
                 />
                 <Image
                   src={image.url ?? ''}
