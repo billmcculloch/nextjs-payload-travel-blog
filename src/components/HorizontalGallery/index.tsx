@@ -17,7 +17,7 @@ export function HorizontalGallery({ trips }: Props) {
               <Link
                 href={slug || ''}
                 key={id}
-                className="flex-none w-fit rounded-hero overflow-hidden relative group carousel-image"
+                className="flex-none w-fit rounded-hero overflow-hidden relative group carousel-image touch-pan-y"
               >
                 <Image
                   src={image.url ?? ''}

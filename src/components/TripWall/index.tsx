@@ -69,7 +69,7 @@ export function TripWall({ trips }: Props) {
           <Link
             href={slug || ''}
             key={id}
-            className="group space-y-sm gallery-image"
+            className="group space-y-sm gallery-image touch-pan-y"
             style={{ animationDelay: `${index * 100}ms` }}
           >
             <div className="relative aspect-4/5 overflow-hidden rounded-soft">
