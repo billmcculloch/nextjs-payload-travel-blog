@@ -156,8 +156,6 @@ export interface Tenant {
    * Becomes the subdomain: slug.yourdomain.com
    */
   slug: string;
-  siteName?: string | null;
-  customDomain?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -379,8 +377,6 @@ export interface SiteSettingsSelect<T extends boolean = true> {
 export interface TenantsSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
-  siteName?: T;
-  customDomain?: T;
   updatedAt?: T;
   createdAt?: T;
 }

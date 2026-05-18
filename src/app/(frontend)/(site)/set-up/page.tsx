@@ -1,10 +1,13 @@
 'use client'
-
+import { redirect, useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 
-export default function SignupPage() {
+export default function SetUpPage() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+
+  const searchParmas = useSearchParams()
+  const id = searchParmas.get('id')
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -12,20 +15,19 @@ export default function SignupPage() {
     setError('')
 
     const fd = new FormData(e.currentTarget)
+
     const body = {
-      name: fd.get('name'),
-      email: fd.get('email'),
-      password: fd.get('password'),
-      slug: fd.get('slug'),
+      siteTitle: fd.get('siteTitle'),
+      id,
     }
 
-    const res = await fetch('/api/sign-up', {
+    const res = await fetch('/api/set-up', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     })
 
-    const { id, slug, error } = await res.json()
+    const { error } = await res.json()
 
     setLoading(false)
 
@@ -34,11 +36,7 @@ export default function SignupPage() {
       return
     }
 
-    const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http'
-
-    const redirectUrl = `${protocol}://${slug}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}/set-up?id=${id}`
-
-    window.location.href = redirectUrl
+    redirect('/')
   }
 
   return (
@@ -61,7 +59,9 @@ export default function SignupPage() {
               />
             </svg>
           </div>
-          <h1 className="text-2xl font-semibold text-stone-900 tracking-tight">Create your blog</h1>
+          <h1 className="text-2xl font-semibold text-stone-900 tracking-tight">
+            Add site settings
+          </h1>
         </div>
 
         {/* Card */}
@@ -69,67 +69,20 @@ export default function SignupPage() {
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Name */}
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-stone-700 mb-1.5">
-                Your name
+              <label
+                htmlFor="siteTitle"
+                className="block text-sm font-medium text-stone-700 mb-1.5"
+              >
+                Blog name
               </label>
               <input
-                id="name"
-                name="name"
+                id="siteTitle"
+                name="siteTitle"
                 type="text"
-                placeholder="Jane Smith"
+                placeholder="My blog"
                 required
                 className="w-full px-3.5 py-2.5 rounded-lg border border-stone-300 bg-white text-stone-900 placeholder-stone-400 text-sm shadow-sm transition-all duration-150 outline-none focus:ring-2 focus:ring-stone-900 focus:border-transparent hover:border-stone-400"
               />
-            </div>
-
-            {/* Email */}
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-stone-700 mb-1.5">
-                Email
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                placeholder="jane@example.com"
-                required
-                className="w-full px-3.5 py-2.5 rounded-lg border border-stone-300 bg-white text-stone-900 placeholder-stone-400 text-sm shadow-sm transition-all duration-150 outline-none focus:ring-2 focus:ring-stone-900 focus:border-transparent hover:border-stone-400"
-              />
-            </div>
-
-            {/* Password */}
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-stone-700 mb-1.5">
-                Password
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                placeholder="At least 8 characters"
-                required
-                className="w-full px-3.5 py-2.5 rounded-lg border border-stone-300 bg-white text-stone-900 placeholder-stone-400 text-sm shadow-sm transition-all duration-150 outline-none focus:ring-2 focus:ring-stone-900 focus:border-transparent hover:border-stone-400"
-              />
-            </div>
-
-            {/* Site name */}
-            <div>
-              <label htmlFor="slug" className="block text-sm font-medium text-stone-700 mb-1.5">
-                Site name
-              </label>
-              <div className="flex rounded-lg border border-stone-300 bg-white shadow-sm overflow-hidden transition-all duration-150 focus-within:ring-2 focus-within:ring-stone-900 focus-within:border-transparent hover:border-stone-400">
-                <input
-                  id="slug"
-                  name="slug"
-                  type="text"
-                  placeholder="my-blog"
-                  required
-                  className="flex-1 px-3 py-2.5 text-sm text-stone-900 placeholder-stone-400 bg-white outline-none"
-                />
-                <div className="flex flex-1 items-center pl-3.5 pr-2.5 text-sm text-stone-400 bg-stone-50 border-r border-stone-300 select-none whitespace-nowrap">
-                  .reccos.site
-                </div>
-              </div>
             </div>
 
             {/* Error */}
@@ -173,10 +126,10 @@ export default function SignupPage() {
                       d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
                     />
                   </svg>
-                  Creating your blog…
+                  Updating your blog…
                 </>
               ) : (
-                'Create my blog →'
+                'Add settings'
               )}
             </button>
           </form>
